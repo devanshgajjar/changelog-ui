@@ -1,10 +1,10 @@
 "use client"
 
 import "./globals.css"
-import { LogProvider } from "@/contexts/LogContext"
-import { AppProvider } from "@/contexts/AppContext"
+import { LogProvider } from "../contexts/LogContext"
+import { AppProvider } from "../contexts/AppContext"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { cn } from "../lib/utils"
 import { usePathname } from "next/navigation"
 
 function Navigation() {
