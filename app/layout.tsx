@@ -6,6 +6,7 @@ import { AppProvider } from "../contexts/AppContext"
 import Link from "next/link"
 import { cn } from "../lib/utils"
 import { usePathname } from "next/navigation"
+import { inter } from './fonts'
 
 function Navigation() {
   const pathname = usePathname()
@@ -40,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full bg-white">
+    <html lang="en" className={cn("h-full bg-white", inter.className)}>
       <body className="min-h-screen bg-white">
         <AppProvider>
           <LogProvider>
