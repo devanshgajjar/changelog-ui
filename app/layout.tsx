@@ -6,7 +6,12 @@ import { AppProvider } from "../contexts/AppContext"
 import Link from "next/link"
 import { cn } from "../lib/utils"
 import { usePathname } from "next/navigation"
-import { inter } from './fonts'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 function Navigation() {
   const pathname = usePathname()
