@@ -42,7 +42,7 @@ def read_root():
 
 @app.get("/api/health")
 def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "timestamp": datetime.now().isoformat()}
 
 @app.get("/api/logs/pending")
 def get_pending_logs():
