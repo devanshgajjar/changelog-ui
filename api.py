@@ -12,8 +12,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://changelog-ui-git-main-devanshs-projects-37c827fd.vercel.app/pending",  # Add your Vercel domain
-        "https://changelog-279kfcqqb-devanshs-projects-37c827fd.vercel.app"
+        "https://changelog-ui.vercel.app",  # Your main Vercel domain
+        "https://changelog-ui-git-main-devanshs-projects-37c827fd.vercel.app",  # Your preview domain
     ],
     allow_credentials=True,
     allow_methods=["*"],
