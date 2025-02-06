@@ -10,11 +10,14 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3003"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://changelog-ui-git-main-devanshs-projects-37c827fd.vercel.app/pending",  # Add your Vercel domain
+        "https://changelog-279kfcqqb-devanshs-projects-37c827fd.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
 )
 
 # In-memory storage

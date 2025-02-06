@@ -1,6 +1,6 @@
 import type { LogEntry } from "@/types/logs"
 
-const API_URL = 'http://localhost:3003'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003'
 
 export async function fetchPendingLogs(): Promise<LogEntry[]> {
   try {
