@@ -7,15 +7,16 @@ import uuid
 
 app = FastAPI()
 
-# Enable CORS
+# Enable CORS with proper configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://changelog-ui.vercel.app",  # Your main Vercel domain
-        "https://changelog-ui-git-main-devanshs-projects-37c827fd.vercel.app",  # Your preview domain
+        "https://changelog-ui.vercel.app",
+        "https://changelog-manager-api.onrender.com",
+        "*"  # Temporarily allow all origins for testing
     ],
-    allow_credentials=True,
+    allow_credentials=False,  # Changed to False since we're using "*"
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -38,7 +39,7 @@ class LogEntry(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"message": "Changelog API is running"}
+    return {"message": "API is running"}
 
 @app.get("/api/health")
 def health_check():

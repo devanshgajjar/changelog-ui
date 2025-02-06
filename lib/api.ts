@@ -1,28 +1,31 @@
 import type { LogEntry } from "@/types/logs"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003'
-console.log('Using API URL:', API_URL) // Debug log
+console.log('Using API URL:', API_URL)
 
 export async function fetchPendingLogs(): Promise<LogEntry[]> {
   try {
-    console.log('Fetching from:', `${API_URL}/api/logs/pending`) // Debug log
-    const response = await fetch(`${API_URL}/api/logs/pending`, {
+    const url = `${API_URL}/api/logs/pending`
+    console.log('Fetching from:', url)
+    
+    const response = await fetch(url, {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
     })
-    console.log('Response status:', response.status) // Debug log
+    
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error('Error response:', errorText) // Debug log
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
+      const text = await response.text()
+      throw new Error(`HTTP error! status: ${response.status}, body: ${text}`)
     }
+    
     const data = await response.json()
-    console.log('Received data:', data) // Debug log
     return data
   } catch (error) {
-    console.error('Error details:', error) // Debug log
+    console.error('Error fetching logs:', error)
     throw error
   }
 }
