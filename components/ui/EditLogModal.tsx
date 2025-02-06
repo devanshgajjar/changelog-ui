@@ -21,9 +21,13 @@ export function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps
     e.preventDefault()
     setIsSaving(true)
     try {
+      // Just use onSave for both create and edit
       await onSave({
+        id: log.id,
         title,
-        content
+        content,
+        date: new Date().toISOString(),
+        status: 'pending'
       })
       onClose()
     } catch (error) {
@@ -37,7 +41,7 @@ export function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Changelog Entry</DialogTitle>
+          <DialogTitle>{log.id ? 'Edit' : 'Create'} Changelog Entry</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -46,6 +50,7 @@ export function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md"
+              required
             />
           </div>
           <div>
@@ -55,6 +60,7 @@ export function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps
               onChange={(e) => setContent(e.target.value)}
               className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md"
               rows={5}
+              required
             />
           </div>
           <div className="flex justify-end gap-3">
@@ -67,7 +73,7 @@ export function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps
               Cancel
             </Button>
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? 'Saving...' : 'Save Changes'}
+              {isSaving ? 'Saving...' : log.id ? 'Save Changes' : 'Create'}
             </Button>
           </div>
         </form>

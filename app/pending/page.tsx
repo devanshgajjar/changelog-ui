@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "../../components/ui/button"
 import type { LogEntry } from "../../types/logs"
-import { fetchPendingLogs, updateLogStatus, updateLogContent } from '../../lib/api'
+import { fetchPendingLogs, updateLogStatus, updateLogContent, createLog } from '../../lib/api'
 import { useApp } from "../../contexts/AppContext"
 import { EditLogModal } from "../../components/ui/EditLogModal"
 
@@ -18,10 +18,12 @@ export default function PendingPage() {
   const loadLogs = async () => {
     try {
       setError(null)
+      setLoading(true)
       const pendingLogs = await fetchPendingLogs()
-      setLogs(pendingLogs)
+      console.log('Loaded logs:', pendingLogs)
+      setLogs(Array.isArray(pendingLogs) ? pendingLogs : [])
     } catch (error) {
-      console.error('Error fetching logs:', error)
+      console.error('Error loading logs:', error)
       setError(error instanceof Error ? error.message : 'Failed to load logs')
     } finally {
       setLoading(false)
@@ -56,6 +58,16 @@ export default function PendingPage() {
       await loadLogs()
     } catch (error) {
       console.error('Error updating log:', error)
+    }
+  }
+
+  const handleCreate = async (newLog: Partial<LogEntry>) => {
+    try {
+      await createLog(newLog)
+      await loadLogs()
+      setIsCreateModalOpen(false)
+    } catch (error) {
+      console.error('Error creating log:', error)
     }
   }
 
@@ -127,7 +139,7 @@ export default function PendingPage() {
         }}
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        onSave={handleEdit}
+        onSave={handleCreate}
       />
     </div>
   )
